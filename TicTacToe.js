@@ -1,4 +1,4 @@
-	var turn = true; //Determines turn . True = X, False = O.
+	var turn = true; //Determines turn. True = X, False = O.
 	var gridx = [false, false, false, false, false, false, false, false, false]; //Used for win detection
 	var grido = [false, false, false, false, false, false, false, false, false]; //Used for win detection
 	var masterGrid = [false, false, false, false, false, false, false, false, false] //Used for tie detection
@@ -11,17 +11,18 @@
 
 		var cellId = id;
 		var cell = document.getElementById(cellId.toString());
-		cell.unWritten=true; //Determines if cell has been written to or not.
+		cell.unWritten = true; //Determines if cell has been written to or not.
 
 		cell.onclick = function () { //Sets action when cell is clicked. Where all the meat of the code is.
 
 			//Cell write
 			cellClick(cellId, cell);
 			//Win detection
-			checkWin(gridx, "X");
-			checkWin(grido, "O");
+			var gameOver = false;
+			gameOver = checkWin(gridx, "X");
+			if(!gameOver) gameOver = checkWin(grido, "O");
 			//Tie detection
-			checkTie(masterGrid);
+			if(!gameOver) checkTie(masterGrid);
 		};
 
 	};
@@ -59,51 +60,56 @@
 
 	function checkWin (gridToCheck, who) {
 		
+		var gameOver = false;
 		if (gridToCheck[0] === true && gridToCheck[1] === true && gridToCheck[2] === true) {
 			
-			win(who);
+			gameOver = win(who);
 			bold([0, 1, 2]);
 
 		} else if (gridToCheck[0] === true && gridToCheck[4] === true && gridToCheck[8] === true) {
 				
-			win(who);
+			gameOver = win(who);
 			bold([0, 4, 8]);
 
 		} else if (gridToCheck[0] === true && gridToCheck[3] === true && gridToCheck[6] === true) {
 
-			win(who);
+			gameOver = win(who);
 			bold([0, 3, 6]);
 
 		} else if (gridToCheck[1] === true && gridToCheck[4] === true && gridToCheck[7] === true) {
 
-			win(who);
+			gameOver = win(who);
 			bold([1, 4, 7]);
 
 		} else if (gridToCheck[2] === true && gridToCheck[5] === true && gridToCheck[8] === true) {
 
-			win(who);
+			gameOver = win(who);
 			bold([2, 5, 8]);
 
 		} else if (gridToCheck[6] === true && gridToCheck[4] === true && gridToCheck[2] === true) {
 
-			win(who);
+			gameOver = win(who);
 			bold([6, 4, 2]);
 
 		} else if (gridToCheck[3] === true && gridToCheck[4] === true && gridToCheck[5] === true) {
 
-			win(who);
+			gameOver = win(who);
 			bold([3, 4, 5]);
 
 		} else if (gridToCheck[6] === true && gridToCheck[7] === true && gridToCheck[8] === true) {
 
-			win(who);
+			gameOver = win(who);
 			bold([6, 7, 8]);
 		}
+
+		return gameOver;
 
 		function win (who) {
 
 			status(who + " won!");
 			writeAll(undefined);
+			return true;
+
 		};
 	};
 

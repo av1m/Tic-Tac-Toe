@@ -1,6 +1,20 @@
-.pointer {
-	cursor:pointer;
-}
+
 .bold {
 	font-weight:900;
+}
+
+.pointer:hover {
+    background-color: yellow;
+}
+
+.pointer {
+    cursor: pointer;
+    margin: 6px;
+    border: 1px solid blue;
+    text-align: center;
+    width: 10px;
+    height: 10px;
+    display: inline-table;
+    padding: 10px;
+    font-size: 14px;
 }
