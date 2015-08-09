@@ -1,4 +1,4 @@
-	var turn = true; //Determines turn. True = X, False = O.
+	var turn = true; //Determines turn . True = X, False = O.
 	var gridx = [false, false, false, false, false, false, false, false, false]; //Used for win detection
 	var grido = [false, false, false, false, false, false, false, false, false]; //Used for win detection
 	var masterGrid = [false, false, false, false, false, false, false, false, false] //Used for tie detection
