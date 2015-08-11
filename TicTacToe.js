@@ -1,3 +1,7 @@
+window.onload = ticTacToe;
+//
+function ticTacToe () {
+
 	var turn = true; //Determines turn. True = X, False = O.
 	var gridx = [false, false, false, false, false, false, false, false, false]; //Used for win detection
 	var grido = [false, false, false, false, false, false, false, false, false]; //Used for win detection
@@ -22,7 +26,7 @@
 			gameOver = checkWin(gridx, "X");
 			if(!gameOver) gameOver = checkWin(grido, "O");
 			//Tie detection
-			if(!gameOver) checkTie(masterGrid);
+			if(!gameOver) checkTie();
 		};
 
 	};
@@ -61,61 +65,33 @@
 	function checkWin (gridToCheck, who) {
 		
 		var gameOver = false;
-		if (gridToCheck[0] === true && gridToCheck[1] === true && gridToCheck[2] === true) {
-			
-			gameOver = win(who);
-			bold([0, 1, 2]);
 
-		} else if (gridToCheck[0] === true && gridToCheck[4] === true && gridToCheck[8] === true) {
-				
-			gameOver = win(who);
-			bold([0, 4, 8]);
-
-		} else if (gridToCheck[0] === true && gridToCheck[3] === true && gridToCheck[6] === true) {
-
-			gameOver = win(who);
-			bold([0, 3, 6]);
-
-		} else if (gridToCheck[1] === true && gridToCheck[4] === true && gridToCheck[7] === true) {
-
-			gameOver = win(who);
-			bold([1, 4, 7]);
-
-		} else if (gridToCheck[2] === true && gridToCheck[5] === true && gridToCheck[8] === true) {
-
-			gameOver = win(who);
-			bold([2, 5, 8]);
-
-		} else if (gridToCheck[6] === true && gridToCheck[4] === true && gridToCheck[2] === true) {
-
-			gameOver = win(who);
-			bold([6, 4, 2]);
-
-		} else if (gridToCheck[3] === true && gridToCheck[4] === true && gridToCheck[5] === true) {
-
-			gameOver = win(who);
-			bold([3, 4, 5]);
-
-		} else if (gridToCheck[6] === true && gridToCheck[7] === true && gridToCheck[8] === true) {
-
-			gameOver = win(who);
-			bold([6, 7, 8]);
-		}
+		gameOver = checkCombo(0, 1, 2, who);
+		if(!gameOver) gameOver = checkCombo(3, 4, 5, who);
+		if(!gameOver) gameOver = checkCombo(6, 7, 8, who);
+		if(!gameOver) gameOver = checkCombo(0, 3, 6, who);
+		if(!gameOver) gameOver = checkCombo(1, 4, 7, who);
+		if(!gameOver) gameOver = checkCombo(2, 5, 8, who);
+		if(!gameOver) gameOver = checkCombo(0, 4, 8, who);
+		if(!gameOver) gameOver = checkCombo(2, 4, 6, who);
 
 		return gameOver;
 
-		function win (who) {
-
-			status(who + " won!");
-			writeAll(undefined);
-			return true;
+		function checkCombo (cell1, cell2, cell3, who) {
+			if(gridToCheck[cell1] === true && gridToCheck[cell2] === true && gridToCheck[cell3] === true) {
+				
+				status(who + " won!");
+				writeAll(undefined);
+				bold([cell1, cell2, cell3]);
+				return true;
+			}
 
 		};
 	};
 
-	function checkTie (grid) {
+	function checkTie () {
 
-		if(grid[0] === true && grid[1] === true && grid[2] === true && grid[3] === true && grid[4] === true && grid[5] === true && grid[6] === true && grid[7] === true && grid[8] === true) { //Checks if board is full
+		if(masterGrid[0] === true && masterGrid[1] === true && masterGrid[2] === true && masterGrid[3] === true && masterGrid[4] === true && masterGrid[5] === true && masterGrid[6] === true && masterGrid[7] === true && masterGrid[8] === true) { //Checks if board is full
 
 			status("Cat's game!");
 			writeAll(undefined);
@@ -155,12 +131,4 @@
 			document.getElementById(i.toString()).innerHTML=" - ";
 		}
 	};
-
-/*
-
-0    1    2
-3    4    5
-6    7    8
-
-
-*/
+};
